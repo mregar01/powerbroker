@@ -9,27 +9,56 @@ function App() {
   // Fetch leaderboard data
   useEffect(() => {
     fetch('https://powerbroker.onrender.com/api/progress')
-      .then((response) => response.json())
-      .then((data) => {
-        setProgress(data);
-      })
-      .catch((error) => console.error('Error fetching progress:', error));
-  }, []);
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch progress');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (!Array.isArray(data)) {
+                throw new Error('Invalid data format');
+            }
+            setProgress(data); // Update state with the fetched progress data
+        })
+        .catch((error) => {
+            console.error('Error fetching progress:', error);
+            setProgress([]); // Handle errors by resetting progress
+        });
+}, []);
+
+const sortedProgress = (progress || []).sort((a, b) => b.page - a.page);
+
+
 
   // Update user progress
   const updateProgress = () => {
     fetch('https://powerbroker.onrender.com/api/progress', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user, page: parseInt(page, 10) }),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user, page: parseInt(page, 10) }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        alert(data.message);
-        setProgress(data.progress); // Update leaderboard
-      })
-      .catch((error) => console.error('Error updating progress:', error));
-  };
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to update progress');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            alert(`Progress updated for ${data.user}: ${data.page} pages`);
+            setProgress((prev) => {
+                const updatedProgress = prev.filter((p) => p.user !== data.user);
+                return [...updatedProgress, data];
+            });
+        })
+        .catch((error) => {
+            console.error('Error updating progress:', error);
+            alert('Error updating progress');
+        });
+};
+
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
@@ -57,14 +86,12 @@ function App() {
       {/* Leaderboard Section */}
       <h2>Leaderboard</h2>
       <ul>
-        {progress
-          .sort((a, b) => b.page - a.page) // Sort by progress in descending order
-          .map((user, index) => (
-            <li key={index}>
-              {user.user}: {user.page} pages
-            </li>
-          ))}
-      </ul>
+            {sortedProgress.map((entry, index) => (
+                <li key={index}>
+                    {entry.user}: {entry.page} pages
+                </li>
+            ))}
+        </ul>
     </div>
   );
 }
