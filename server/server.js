@@ -46,14 +46,14 @@ app.post('/api/progress', (req, res) => {
 });
 
 // Serve React build files in production
-if (process.env.NODE_ENV === 'production') {
-  const path = require('path');
-  app.use(express.static(path.join(__dirname, '../client/build')));
+// if (process.env.NODE_ENV === 'production') {
+//   const path = require('path');
+//   app.use(express.static(path.join(__dirname, '../client/build')));
   
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+//   });
+// }
 
 // Start the server
 app.listen(PORT, () => {
