@@ -5,11 +5,12 @@ const PORT = 5001;
 
 const cors = require('cors');
 
-// Allow requests from localhost:3000
+// Allow requests from the frontend
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://your-frontend-url.vercel.app']
+    origin: ['http://localhost:3000', 'https://powerbroker.vercel.app'],
+    methods: ['GET', 'POST'],
+    credentials: true
 }));
-
 
 // Middleware for JSON parsing
 app.use(bodyParser.json());
