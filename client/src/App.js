@@ -8,7 +8,7 @@ function App() {
 
   // Fetch leaderboard data
   useEffect(() => {
-    fetch('/api/progress')
+    fetch('https://powerbroker.onrender.com/api/progress')
       .then((response) => response.json())
       .then((data) => {
         setProgress(data);
@@ -18,7 +18,7 @@ function App() {
 
   // Update user progress
   const updateProgress = () => {
-    fetch('/api/progress', {
+    fetch('https://powerbroker.onrender.com/api/progress', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user, page: parseInt(page, 10) }),

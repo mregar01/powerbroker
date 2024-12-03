@@ -3,6 +3,14 @@ const bodyParser = require('body-parser'); // Add for parsing JSON bodies
 const app = express();
 const PORT = 5001;
 
+const cors = require('cors');
+
+// Allow requests from localhost:3000
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://your-frontend-url.vercel.app']
+}));
+
+
 // Middleware for JSON parsing
 app.use(bodyParser.json());
 
