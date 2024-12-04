@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '.././custom.css';
 import { useNavigate } from 'react-router-dom';
-// import jwtDecode from 'jwt-decode';
-// import jwtDecode from 'jwt-decode';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -13,11 +11,12 @@ function LoginRegister() {
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate(); // React Router hook for navigation
+  const connectionString = process.env.REACT_APP_CONNECTION_STRING;
 
   const handleSubmit = () => {
     const endpoint = isRegistering
-      ? 'https://powerbroker.onrender.com/api/register'
-      : 'https://powerbroker.onrender.com/api/login';
+      ? `${connectionString}/api/register`
+      : `${connectionString}/api/login`;
 
     fetch(endpoint, {
       method: 'POST',

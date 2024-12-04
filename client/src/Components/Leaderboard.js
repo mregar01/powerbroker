@@ -4,14 +4,13 @@ import Moses from '../moses.png';
 function Leaderboard() {
   const [progress, setProgress] = useState([]);
   const [page_number, setPage] = useState('');
-
-  const prodLink = 'https://powerbroker.onrender.com/api/progress';
+  const connectionString = process.env.REACT_APP_CONNECTION_STRING;
 
   // Get current user from localStorage
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   useEffect(() => {
-    fetch(prodLink, {
+    fetch(`${connectionString}/api/progress`, {
       headers: {
         Authorization: `Bearer ${currentUser?.token}`, // Pass token for protected routes
       },
@@ -32,12 +31,12 @@ function Leaderboard() {
         console.error('Error fetching progress:', error);
         setProgress([]);
       });
-  }, [currentUser]);
+  }, [currentUser, connectionString]);
 
   const sortedProgress = (progress || []).sort((a, b) => b.page_number - a.page_number);
 
   const updateProgress = () => {
-    fetch(prodLink, {
+    fetch(`${connectionString}/api/progress`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
