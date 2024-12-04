@@ -1,0 +1,96 @@
+/* src/custom.css */
+.custom-header {
+  font-size: 8rem;
+  font-weight: bold;
+  font-family: 'Impact', sans-serif;
+  color: rgb(234, 51, 35); /* No transparency */
+  text-align: center;
+  padding: 0px;
+  border-radius: 0px;
+  margin: 0; /* Remove default margin */
+  line-height: 0.75; /* Adjust line spacing */
+}
+
+/* Grid container */
+/* Grid container for layout */
+
+.grid-container {
+  display: grid;
+  grid-template-rows: auto auto auto; /* Three rows of equal height */
+  align-items: center; /* Ensure all items are vertically centered */
+  gap: 0; /* Remove additional spacing */
+  margin: 0;
+  padding: 0;
+}
+
+
+.power-rankings {
+  display: grid;
+  align-items: center;
+  gap: 0; /* No gap between grid items */
+  margin: 0; /* Remove margin around the container */
+  padding: 0; /* Remove padding inside the container */
+  grid-column: 2;
+  font-size: 6rem;
+  font-style: italic;
+  font-family: 'Impact', sans-serif;
+  color: black; /* No transparency */
+  text-align: center;
+  line-height: 1; /* Ensure tight line spacing */
+}
+
+.date-today {
+  display: grid;
+  align-items: center;
+  gap: 0; /* No gap between grid items */
+  margin: 10; /* Remove margin around the container */
+  padding: 0; /* Remove padding inside the container */
+  grid-column: 2;
+  font-size: 2rem;
+  font-family: 'Impact', sans-serif;
+  color: black; 
+  text-align: center;
+  line-height: 1; /* Ensure tight line spacing */
+}
+
+/* Images */
+.grid-image {
+  max-width: 100%;
+  object-fit: contain; /* Ensure images fit within their container */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  height: 75%; /* Set the image height to 90% of its parent container */
+  width: auto; /* Maintain aspect ratio */
+}
+
+/* Left image */
+.grid-image.left {
+  grid-column: 1; /* Left column */
+  grid-row: 0 / 3; /* Span the rows of the text */
+  align-items: right;
+
+}
+
+/* Right image */
+.grid-image.right {
+  grid-column: 3; /* Right column */
+  grid-row: 0 / 4; /* Span the rows of the text */
+  align-items: left;
+}
+
+/* Words container */
+.grid-words {
+  grid-column: 2; /* Middle column for text */
+  justify-content: center; /* Center text vertically */
+  align-items: center; /* Center text horizontally */
+  gap: 10; /* Remove space between the text elements */
+}
+
+/* Headers styling */
+
+
+
+.inverted-image {
+  transform: scaleX(-1); /* Flip the image horizontally */
+  display: block; /* Ensure the image respects layout flow */
+}
