@@ -4,6 +4,17 @@ const app = express();
 const PORT = 5001;
 
 const cors = require('cors');
+
+app.use(cors({
+    origin: [
+        'http://localhost:3000', // Allow local development
+        'https://powerbroker-5l3o0svbg-maxs-projects-1188a820.vercel.app', // Allow deployed frontend
+        'https://powerbroker.vercel.app' // Allow previous frontend URL if needed
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
+
 require('dotenv').config();
 const { Pool } = require('pg');
 
@@ -17,11 +28,7 @@ const pool = new Pool({
 
 
 // Allow requests from the frontend
-app.use(cors({
-    origin: ['http://localhost:3000', 'https://powerbroker.vercel.app'],
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
+
 
 // Middleware for JSON parsing
 app.use(bodyParser.json());
@@ -47,11 +54,6 @@ app.get('/api/progress', async (req, res) => {
   }
 });
 
-
-// Helper function to capitalize the first letter
-// function capitalize(name) {
-//   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-// }
 
 // Update progress
 app.post('/api/progress', async (req, res) => {
