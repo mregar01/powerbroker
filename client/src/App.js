@@ -1,15 +1,20 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginRegister from './Components/LoginRegister';
+import Login from './Components/Login';
+import Register from './Components/Register';
 import Leaderboard from './Components/Leaderboard';
+import User from './Components/User';
 
 function App() {
   return (
     <Router>
       <div className="container py-4">
         <Routes>
-          <Route path="/" element={<LoginRegister />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/user/:username" element={<User />} />
         </Routes>
       </div>
     </Router>

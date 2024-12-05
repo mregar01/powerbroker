@@ -31,7 +31,7 @@
   margin: 0; /* Remove margin around the container */
   padding: 0; /* Remove padding inside the container */
   grid-column: 2;
-  font-size: 6rem;
+  font-size: 3rem;
   font-style: italic;
   font-family: 'Impact', sans-serif;
   color: black; /* No transparency */
@@ -92,5 +92,78 @@
 
 .inverted-image {
   transform: scaleX(-1); /* Flip the image horizontally */
-  display: block; /* Ensure the image respects layout flow */
+
+}
+
+/* Custom List Styling */
+.custom-list-group .list-group-item {
+  border: none; /* Remove default borders */
+  padding: 15px; /* Add more padding */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.custom-list-group .list-group-item:hover {
+  background-color: darkgray; /* Highlight on hover */
+}
+
+.bg-lights {
+  background-color: #000033; /* Light gray for even rows */
+}
+
+.bg-alternate {
+  background-color: #000033; /* Slightly darker gray for odd rows */
+}
+
+.text-dark:hover {
+  color: #0056b3; /* Change text color on hover for links */
+}
+
+.leader-entry {
+  color: white;
+  font-family: 'Impact', sans-serif;
+  font-size: large;
+}
+
+.progress-bar {
+  background-color: #28a745; /* Green for completed progress */
+}
+
+/* CSS */
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover {
+  background-color: #fff;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+.profile-name {
+  font-family: 'Impact', sans-serif;
 }

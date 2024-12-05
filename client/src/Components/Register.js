@@ -1,24 +1,18 @@
+// Components/Register.js
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '.././custom.css';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import styles from '.././login.module.css'
 
-
-
-function LoginRegister() {
+function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false);
-  const navigate = useNavigate(); // React Router hook for navigation
+  const navigate = useNavigate();
   const connectionString = process.env.REACT_APP_CONNECTION_STRING;
 
-  const handleSubmit = () => {
-    const endpoint = isRegistering
-      ? `${connectionString}/api/register`
-      : `${connectionString}/api/login`;
-
-    fetch(endpoint, {
+  const handleRegister = () => {
+    fetch(`${connectionString}/api/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,24 +21,18 @@ function LoginRegister() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Error during login/register');
+          throw new Error('Error during registration');
         }
         return response.json();
       })
       .then((data) => {
-        alert(isRegistering ? 'Registration successful!' : 'Login successful!');
-        // Handle storing tokens or redirecting to leaderboard
-
         const decodedToken = jwtDecode(data.token);
-      const usernameFromToken = decodedToken.username;
+        const usernameFromToken = decodedToken.username;
 
-      // Store username and token in localStorage
-      localStorage.setItem(
-        'currentUser',
-        JSON.stringify({ token: data.token, username: usernameFromToken })
-      );
-
-        // Redirect to leaderboard
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify({ token: data.token, username: usernameFromToken })
+        );
         navigate('/leaderboard');
       })
       .catch((error) => {
@@ -54,8 +42,9 @@ function LoginRegister() {
   };
 
   return (
-    <div className="container py-5">
-      <h1>{isRegistering ? 'Register' : 'Login'}</h1>
+    <div className={`${styles.container} container py-2 cream-background`}>
+      <h1 className="custom-header">The Power Broker</h1>
+      <h1 className={styles.login}>Register</h1>
       <div className="mb-3">
         <input
           type="text"
@@ -75,18 +64,18 @@ function LoginRegister() {
         />
       </div>
       <div className="d-flex gap-2">
-        <button className="btn btn-primary" onClick={handleSubmit}>
-          {isRegistering ? 'Register' : 'Login'}
+        <button className={styles['button-74']} onClick={handleRegister}>
+          Register
         </button>
         <button
-          className="btn btn-secondary"
-          onClick={() => setIsRegistering(!isRegistering)}
+          className={styles['button-74']}
+          onClick={() => navigate('/')}
         >
-          {isRegistering ? 'Switch to Login' : 'Switch to Register'}
+          Switch to Login
         </button>
       </div>
     </div>
   );
 }
 
-export default LoginRegister;
+export default Register;

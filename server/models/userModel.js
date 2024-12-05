@@ -21,6 +21,13 @@ const UserModel = {
         const result = await pool.query('SELECT username, page_number FROM progress ORDER BY page_number DESC');
         return result.rows;
     },
+    updateUserProfile: async (username, bio, height, weight, profile_picture) => {
+        return pool.query(
+            'UPDATE progress SET bio = $2, height = $3, weight = $4, profile_picture = $5 \
+            WHERE username = $1 RETURNING *',
+            [username, bio, height, weight, profile_picture]
+        );
+    }
 };
 
 module.exports = UserModel;

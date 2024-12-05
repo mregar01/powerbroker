@@ -1,6 +1,7 @@
 const express = require('express');
 const AuthController = require('../controllers/authController');
 const ProgressController = require('../controllers/progressController');
+const UserController = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -14,5 +15,9 @@ router.post('/login', AuthController.login);
 // Progress routes
 router.post('/progress', ProgressController.updateProgress);
 router.get('/progress', ProgressController.fetchAllProgress);
+
+// User routes
+router.post('/user', UserController.updateUser);
+router.get('/user', UserController.fetchUser); 
 
 module.exports = router;
