@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import styles from '.././login.module.css'
 import Crown from '../crownnew.png'
 import Mick from '../mickey.png'
+import Loser from '../last.png'
 
 function Leaderboard() {
   const [progress, setProgress] = useState([]);
@@ -115,9 +116,23 @@ function Leaderboard() {
                       }}
                     />
                   )}
-                  {entry.username === 'Rich' && (
+                  {entry.username === 'Rich_KingOfNY' && (
                     <img
                       src={Mick} // Replace with your crown image path
+                      alt="Crown"
+                      style={{
+                        position: "absolute",
+                        top: "-20px",
+                        left: "-20px",
+                        width: "50px",
+                        height: "50px",
+                        zIndex: 10,
+                      }}
+                    />
+                  )}
+                  {index === sortedProgress.length - 1 && (
+                    <img
+                      src={Loser} // Replace with your crown image path
                       alt="Crown"
                       style={{
                         position: "absolute",
