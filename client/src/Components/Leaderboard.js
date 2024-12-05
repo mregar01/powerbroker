@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '.././custom.css'
 import { Link } from 'react-router-dom';
 import styles from '.././login.module.css'
+import Crown from '../crownnew.png'
+import Mick from '../mickey.png'
 
 function Leaderboard() {
   const [progress, setProgress] = useState([]);
@@ -96,10 +98,37 @@ function Leaderboard() {
               return (
                 <li
                   key={index}
-                  className={`list-group-item d-flex align-items-center justify-content-between my-1 rounded ${
-                    index % 2 === 0 ? "bg-lights" : "bg-alternate"
-                  }`}
+                  className="list-group-item d-flex align-items-center justify-content-between my-1 rounded bg-alternate"
                 >
+                  {/* Crown for First Place */}
+                  {index === 0 && (
+                    <img
+                      src={Crown} // Replace with your crown image path
+                      alt="Crown"
+                      style={{
+                        position: "absolute",
+                        top: "-20px",
+                        left: "-20px",
+                        width: "50px",
+                        height: "50px",
+                        zIndex: 10,
+                      }}
+                    />
+                  )}
+                  {entry.username === 'Rich' && (
+                    <img
+                      src={Mick} // Replace with your crown image path
+                      alt="Crown"
+                      style={{
+                        position: "absolute",
+                        top: "-20px",
+                        left: "-20px",
+                        width: "50px",
+                        height: "50px",
+                        zIndex: 10,
+                      }}
+                    />
+                  )}
                   {/* Progress Bar */}
                   <div
                     className="d-flex align-items-center"
