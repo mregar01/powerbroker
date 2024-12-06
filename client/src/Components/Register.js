@@ -12,6 +12,15 @@ function Register() {
   const connectionString = process.env.REACT_APP_CONNECTION_STRING;
 
   const handleRegister = () => {
+    try {
+      if (username === null || username === '') {
+        throw new Error('Error during registration, Cannot use empty name');
+      }
+    } catch (error) {
+      alert('Caught an error:', error.message);
+      navigate('/register');
+      return;
+    }
     fetch(`${connectionString}/api/register`, {
       method: 'POST',
       headers: {
@@ -72,6 +81,14 @@ function Register() {
           onClick={() => navigate('/')}
         >
           Switch to Login
+        </button>
+      </div>
+      <div className='my-3'>
+        <button
+            className={styles['button-74']}
+            onClick={() => navigate('/leaderboard')}
+          >
+            Continue As Guest
         </button>
       </div>
     </div>

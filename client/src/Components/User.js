@@ -78,6 +78,16 @@ function User() {
     return (pageNumber / daysElapsed).toFixed(2); // Average pages per day
   };
 
+  const calculateFinishDate = (pageNumber) => {
+    const pagesPerDay = calculatePagesPerDay(pageNumber);
+    const daysToFinish = Math.floor(1162 / pagesPerDay);
+    const currentDate = new Date();
+    const finishDate = new Date(currentDate);
+    finishDate.setDate(currentDate.getDate() + daysToFinish);
+    return finishDate;
+
+  }
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -166,20 +176,34 @@ function User() {
               <p><strong>Bio:</strong> {userData.bio || 'No bio available'}</p>
             </div>
             <div className="row mb-3">
-              <div className="col">
+              <div className="col text-center">
                 <p><strong>Height:</strong> {userData.height ? `${userData.height} inches` : 'N/A'}</p>
               </div>
-              <div className="col">
+              <div className="col text-center">
                 <p><strong>Weight:</strong> {userData.weight ? `${userData.weight} lbs` : 'N/A'}</p>
               </div>
             </div>
             <div className="row mb-3">
-              <div className="col">
+              <div className="col text-center">
                 <p><strong>Current Page:</strong> {userData.page_number || 'N/A'}</p>
               </div>
-              <div className="col">
+              <div className="col text-center">
                 <p><strong>Pages/Day:</strong> {userData.page_number ? calculatePagesPerDay(userData.page_number) : 'N/A'}</p>
               </div>
+            </div>
+            <div className="row mb-3">
+            <div className="col text-center">
+              <p>
+                <strong>Projected Finish Date: </strong> 
+                {userData.page_number ? 
+                  new Date(calculateFinishDate(userData.page_number)).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  }) 
+                  : 'N/A'}
+              </p>
+            </div>
             </div>
             {currentUser === username && (
               <div className="text-center mb-3">

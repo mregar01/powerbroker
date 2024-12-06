@@ -75,6 +75,14 @@ function Login() {
           Switch to Register
         </button>
       </div>
+      <div className='my-3'>
+        <button
+            className={styles['button-74']}
+            onClick={() => navigate('/leaderboard')}
+          >
+            Continue As Guest
+        </button>
+      </div>
     </div>
 
   );

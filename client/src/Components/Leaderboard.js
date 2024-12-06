@@ -166,8 +166,17 @@ function Leaderboard() {
                     <span style={{ fontSize: "0.9rem", fontWeight: "bold", color: 'white'}}>
                       {Math.round(progress)}%
                     </span>
+                    
                   </div>
-
+                  <img 
+                    src={entry.profile_picture} 
+                    alt={`${entry.bio}`}
+                    style={{
+                        width: "45px",
+                        height: "45px",
+                        zIndex: 10,
+                      }}>
+                  </img>
                   {/* Username */}
                   <Link
                     to={`/user/${entry.username}`}

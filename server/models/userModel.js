@@ -18,7 +18,7 @@ const UserModel = {
         );
     },
     fetchAllProgress: async () => {
-        const result = await pool.query('SELECT username, page_number FROM progress ORDER BY page_number DESC');
+        const result = await pool.query('SELECT username, page_number, profile_picture FROM progress ORDER BY page_number DESC');
         return result.rows;
     },
     updateUserProfile: async (username, bio, height, weight, profile_picture) => {
