@@ -3,7 +3,6 @@ const MessageModel = require('../models/messageModel');
 const messageController = {
   sendMessage: async (req, res) => {
       const { username, message, image_link } = req.body;
-      console.log(req.body);
       try {
           const result = await MessageModel.postMessage(username, message, image_link);
           if (!result) return res.status(404).send('no messages found');
