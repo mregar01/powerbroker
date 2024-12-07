@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import '.././custom.css'
 
 function User() {
   const { username } = useParams(); // Extract the username from the URL
@@ -10,6 +10,7 @@ function User() {
   const [loading, setLoading] = useState(true); // Store loading state
   const [editMode, setEditMode] = useState(false); // Track edit mode
   const [formData, setFormData] = useState({}); // Form data for editing
+  const [menuOpen, setMenuOpen] = useState(false); // Track menu visibility
   const connectionString = process.env.REACT_APP_CONNECTION_STRING;
   const navigate = useNavigate();
 
@@ -85,8 +86,11 @@ function User() {
     const finishDate = new Date(currentDate);
     finishDate.setDate(currentDate.getDate() + daysToFinish);
     return finishDate;
+  };
 
-  }
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev); // Toggle menu visibility
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -98,6 +102,34 @@ function User() {
 
   return (
     <div>
+      {/* Menu Button */}
+      <div className="text-end mb-3">
+        <button className="button-74" onClick={toggleMenu}>
+          Menu
+        </button>
+        {menuOpen && (
+          <div className="menu">
+            <ul className="menu-list">
+              <li className="menu-item">
+                <Link to={`/user/${currentUser?.username}`} className="menu-link">
+                  My Profile
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/leaderboard" className="menu-link">
+                  Leaderboard
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/message" className="menu-link">
+                  Message Board
+                </Link>
+              </li>
+            </ul>
+        </div>
+        )}
+      </div>
+
       <h1 className='custom-header'>{userData.username}</h1>
       {editMode && currentUser === username ? (
         <>
@@ -155,7 +187,6 @@ function User() {
             </div>
           </div>
         </>
-
       ) : (
         <>
           <div className="profile-container p-4 shadow rounded bg-light" style={{ maxWidth: '600px', margin: '0 auto' }}>
@@ -192,18 +223,18 @@ function User() {
               </div>
             </div>
             <div className="row mb-3">
-            <div className="col text-center">
-              <p>
-                <strong>Projected Finish Date: </strong> 
-                {userData.page_number ? 
-                  new Date(calculateFinishDate(userData.page_number)).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  }) 
-                  : 'N/A'}
-              </p>
-            </div>
+              <div className="col text-center">
+                <p>
+                  <strong>Projected Finish Date: </strong> 
+                  {userData.page_number ? 
+                    new Date(calculateFinishDate(userData.page_number)).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    }) 
+                    : 'N/A'}
+                </p>
+              </div>
             </div>
             {currentUser === username && (
               <div className="text-center mb-3">
@@ -220,9 +251,7 @@ function User() {
             </button>
           </div>
         </>
-
       )}
-      
     </div>
   );
 }

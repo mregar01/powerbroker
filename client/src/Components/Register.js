@@ -50,6 +50,11 @@ function Register() {
       });
   };
 
+  const handleGuest = () => {
+    localStorage.removeItem('currentUser');
+    navigate('/leaderboard');
+  }
+
   return (
     <div className={`${styles.container} container py-2 cream-background`}>
       <h1 className="custom-header">The Power Broker</h1>
@@ -86,7 +91,7 @@ function Register() {
       <div className='my-3'>
         <button
             className={styles['button-74']}
-            onClick={() => navigate('/leaderboard')}
+            onClick={handleGuest}
           >
             Continue As Guest
         </button>

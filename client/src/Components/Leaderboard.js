@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Moses from '../mosesnew.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '.././custom.css'
+import '.././custom.css';
 import { Link } from 'react-router-dom';
-import styles from '.././login.module.css'
-import Crown from '../crownnew.png'
-import Mick from '../mickey.png'
-import Loser from '../last.png'
+import styles from '.././login.module.css';
+import Crown from '../crownnew.png';
+import Mick from '../mickey.png';
+import Loser from '../last.png';
 
 function Leaderboard() {
   const [progress, setProgress] = useState([]);
   const [page_number, setPage] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false); // Track menu visibility
   const connectionString = process.env.REACT_APP_CONNECTION_STRING;
-
 
   // Get current user from localStorage
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -68,170 +68,198 @@ function Leaderboard() {
         console.error('Error updating progress:', error.message || error);
         alert(`Error updating progress: ${error.message}`);
       });
-      
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev); // Toggle menu visibility
   };
 
   return (
-      <div className="container my-0">
-        <div className="row">
-          <div className="col text-end"> 
-            <img src={Moses} alt="Left" className="inverted-image" />
-          </div>
-          <div className="col text-center p-3">
-            <h1 className="custom-header">The Power Broker</h1>
-            <h2 className="power-rankings mt-4">Power Rankings</h2>
-            <h2 className="date-today">
-              {new Date().toLocaleDateString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-              })}
-            </h2>
-          </div>
-          <div className="col text-start"> 
-            <img src={Moses} alt="Right" className="" />
-          </div>
+    <div className="container my-0">
+      {/* Menu Button */}
+      <div className="text-end mt-3">
+        <button className="button-74" onClick={toggleMenu}>
+          Menu
+        </button>
+        {menuOpen && (
+          <div className="menu">
+            <ul className="menu-list">
+              <li className="menu-item">
+                <Link to={`/user/${currentUser?.username}`} className="menu-link">
+                  My Profile
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/leaderboard" className="menu-link">
+                  Leaderboard
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/message" className="menu-link">
+                  Message Board
+                </Link>
+              </li>
+            </ul>
         </div>
-        <div className="row pt-3" style={{ marginLeft: "9rem", marginRight: "9rem" }}>
-          <ul className="list-group custom-list-group">
-            {sortedProgress.map((entry, index) => {
-              const progress = Math.min((entry.page_number / 1162) * 100, 100); // Calculate progress percentage
-              return (
-                <li
-                  key={index}
-                  className="list-group-item d-flex align-items-center justify-content-between my-1 rounded bg-alternate"
+        )}
+      </div>
+      {/* Header Row */}
+      <div className="row">
+        <div className="col text-end"> 
+          <img src={Moses} alt="Left" className="inverted-image" />
+        </div>
+        <div className="col text-center p-3">
+          <h1 className="custom-header">The Power Broker</h1>
+          <h2 className="power-rankings mt-4">Power Rankings</h2>
+          <h2 className="date-today">
+            {new Date().toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+            })}
+          </h2>
+        </div>
+        <div className="col text-start"> 
+          <img src={Moses} alt="Right" />
+        </div>
+      </div>
+
+      {/* Leaderboard */}
+      <div className="row pt-3" style={{ marginLeft: "9rem", marginRight: "9rem" }}>
+        <ul className="list-group custom-list-group">
+          {sortedProgress.map((entry, index) => {
+            const progress = Math.min((entry.page_number / 1162) * 100, 100); // Calculate progress percentage
+            return (
+              <li
+                key={index}
+                className="list-group-item d-flex align-items-center justify-content-between my-1 rounded bg-alternate"
+              >
+                {/* Conditional Crowns */}
+                {index === 0 && (
+                  <img
+                    src={Crown}
+                    alt="Crown"
+                    style={{
+                      position: "absolute",
+                      top: "-20px",
+                      left: "-20px",
+                      width: "50px",
+                      height: "50px",
+                      zIndex: 10,
+                    }}
+                  />
+                )}
+                {entry.username === 'Rich_KingOfNY' && (
+                  <img
+                    src={Mick}
+                    alt="Crown"
+                    style={{
+                      position: "absolute",
+                      top: "-20px",
+                      left: "-20px",
+                      width: "50px",
+                      height: "50px",
+                      zIndex: 10,
+                    }}
+                  />
+                )}
+                {index === sortedProgress.length - 1 && (
+                  <img
+                    src={Loser}
+                    alt="Crown"
+                    style={{
+                      position: "absolute",
+                      top: "-20px",
+                      left: "-20px",
+                      width: "50px",
+                      height: "50px",
+                      zIndex: 10,
+                    }}
+                  />
+                )}
+                {/* Progress Bar */}
+                <div
+                  className="d-flex align-items-center"
+                  style={{ width: "180px", marginRight: "15px" }}
                 >
-                  {/* Crown for First Place */}
-                  {index === 0 && (
-                    <img
-                      src={Crown} // Replace with your crown image path
-                      alt="Crown"
-                      style={{
-                        position: "absolute",
-                        top: "-20px",
-                        left: "-20px",
-                        width: "50px",
-                        height: "50px",
-                        zIndex: 10,
-                      }}
-                    />
-                  )}
-                  {entry.username === 'Rich_KingOfNY' && (
-                    <img
-                      src={Mick} // Replace with your crown image path
-                      alt="Crown"
-                      style={{
-                        position: "absolute",
-                        top: "-20px",
-                        left: "-20px",
-                        width: "50px",
-                        height: "50px",
-                        zIndex: 10,
-                      }}
-                    />
-                  )}
-                  {index === sortedProgress.length - 1 && (
-                    <img
-                      src={Loser} // Replace with your crown image path
-                      alt="Crown"
-                      style={{
-                        position: "absolute",
-                        top: "-20px",
-                        left: "-20px",
-                        width: "50px",
-                        height: "50px",
-                        zIndex: 10,
-                      }}
-                    />
-                  )}
-                  {/* Progress Bar */}
                   <div
-                    className="d-flex align-items-center"
-                    style={{ width: "180px", marginRight: "15px" }}
+                    className="progress"
+                    style={{ width: "150px", height: "8px", marginRight: "5px" }}
                   >
                     <div
-                      className="progress"
-                      style={{ width: "150px", height: "8px", marginRight: "5px" }}
-                    >
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        style={{ width: `${progress}%` }}
-                        aria-valuenow={progress}
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                    {/* Percentage */}
-                    <span style={{ fontSize: "0.9rem", fontWeight: "bold", color: 'white'}}>
-                      {Math.round(progress)}%
-                    </span>
-                    
+                      className="progress-bar"
+                      role="progressbar"
+                      style={{ width: `${progress}%` }}
+                      aria-valuenow={progress}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
-                  <img 
-                    src={entry.profile_picture} 
-                    alt={`${entry.bio}`}
-                    style={{
-                        width: "45px",
-                        height: "45px",
-                        zIndex: 10,
-                      }}>
-                  </img>
-                  {/* Username */}
-                  <Link
-                    to={`/user/${entry.username}`}
-                    className="text-decoration-none leader-entry"
-                    style={{ textAlign: "center", flexGrow: "1" }}
-                  >
-                    {entry.username}
-                  </Link>
-
-                  {/* Page Number */}
-                  <span
-                    className="leader-entry"
-                    style={{ marginLeft: "auto", fontWeight: "bold" }}
-                  >
-                    {entry.page_number} pages
+                  <span style={{ fontSize: "0.9rem", fontWeight: "bold", color: 'white'}}>
+                    {Math.round(progress)}%
                   </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
-        {/* Update Progress Section */}
-        <div className="mb-4">
-          <div className="row g-2 py-4 px-5">
-            <div className=" d-flex">
-              <button
-                className={`${styles['button-74']} d-flex align-items-center`}
-                onClick={updateProgress}
-                style={{ width: '100%', padding: '10px 15px', position: 'relative' }}
-              >
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Page Number"
-                  value={page_number}
-                  onChange={(e) => setPage(e.target.value)}
-                  onClick={(e) => e.stopPropagation()} // Prevents input click from triggering button
+                </div>
+                <img 
+                  src={entry.profile_picture} 
+                  alt={`${entry.bio}`}
                   style={{
-                    border: 'none',
-                    flex: '1',
-                    height: '100%',
-                    margin: '0',
-                    padding: '5px 10px',
-                    fontSize: '1rem',
-                  }}
+                      width: "45px",
+                      height: "45px",
+                      zIndex: 10,
+                    }}
                 />
-                <span style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
-                  Update Progress
+                <Link
+                  to={`/user/${entry.username}`}
+                  className="text-decoration-none leader-entry"
+                  style={{ textAlign: "center", flexGrow: "1" }}
+                >
+                  {entry.username}
+                </Link>
+                <span
+                  className="leader-entry"
+                  style={{ marginLeft: "auto", fontWeight: "bold" }}
+                >
+                  {entry.page_number} pages
                 </span>
-              </button>
-            </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      {/* Update Progress Section */}
+      <div className="mb-4">
+        <div className="row g-2 py-4 px-5">
+          <div className="d-flex">
+            <button
+              className={`${styles['button-74']} d-flex align-items-center`}
+              onClick={updateProgress}
+              style={{ width: '100%', padding: '10px 15px', position: 'relative' }}
+            >
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Page Number"
+                value={page_number}
+                onChange={(e) => setPage(e.target.value)}
+                onClick={(e) => e.stopPropagation()} // Prevents input click from triggering button
+                style={{
+                  border: 'none',
+                  flex: '1',
+                  height: '100%',
+                  margin: '0',
+                  padding: '5px 10px',
+                  fontSize: '1rem',
+                }}
+              />
+              <span style={{ marginLeft: '10px', whiteSpace: 'nowrap' }}>
+                Update Progress
+              </span>
+            </button>
           </div>
         </div>
       </div>
+    </div>
   );
 }
 

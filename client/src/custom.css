@@ -167,3 +167,118 @@
 .profile-name {
   font-family: 'Impact', sans-serif;
 }
+
+.message-item {
+  background-color: #deb887;  color: white; /* White text for better contrast */
+  margin-bottom: 5px; /* Small margin between messages */
+  padding: 10px; /* Padding for better readability */
+  border-radius: 5px; /* Rounded corners for aesthetics */
+}
+
+
+/* Menu container styling */
+.menu {
+  position: absolute; /* Required for positioning */
+  right: 10px; /* Align the menu to the right */
+  top: 110px; /* Adjust vertical placement */
+  background-color: #ffffff; /* White background */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Internal spacing */
+  width: 200px; /* Fixed width */
+  z-index: 1000; /* Ensure it overlays other elements */
+  animation: fadeIn 0.3s ease-in-out; /* Smooth appearance animation */
+}
+
+
+/* List styling */
+.menu ul {
+  list-style: none; /* Remove bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+/* List item styling */
+.menu li {
+  margin-bottom: 12px; /* Space between items */
+}
+
+.menu li:last-child {
+  margin-bottom: 0; /* Remove margin from the last item */
+}
+
+/* Link styling */
+.menu a {
+  text-decoration: none; /* Remove underline */
+  color: #007bff; /* Bootstrap primary color */
+  font-weight: 500; /* Slightly bold */
+  transition: color 0.2s ease-in-out; /* Smooth hover transition */
+}
+
+.menu a:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: #007bff; /* Bootstrap primary color */
+  border-color: #007bff; /* Match border to background */
+  border-radius: 25px; /* Rounded button */
+  padding: 10px 20px; /* Add spacing inside the button */
+  font-size: 16px; /* Slightly larger text */
+  transition: all 0.2s ease-in-out; /* Smooth hover transition */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  border-color: #0056b3; /* Match border to background */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Fade-in animation for the menu */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Menu list styling */
+.menu-list {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+/* Menu item styling */
+.menu-item {
+  margin: 8px 0; /* Add spacing between menu items */
+}
+
+/* Menu link styling */
+.menu-link {
+  display: block; /* Makes the entire area clickable */
+  text-decoration: none; /* Remove underline */
+  color: #007bff; /* Primary blue color */
+  font-weight: 600; /* Slightly bold for emphasis */
+  padding: 10px 15px; /* Add spacing inside the link */
+  border-radius: 8px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for menu links */
+.menu-link:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: white; /* White text on hover */
+}
+
+/* Active link styling */
+.menu-link:active {
+  background-color: #0056b3; /* Darker blue for active state */
+  color: white;
+}

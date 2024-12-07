@@ -5,6 +5,7 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Leaderboard from './Components/Leaderboard';
 import User from './Components/User';
+import Message from './Components/MessageBoard'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/user/:username" element={<User />} />
+          <Route path="/message" element={<Message />} />
         </Routes>
       </div>
     </Router>
