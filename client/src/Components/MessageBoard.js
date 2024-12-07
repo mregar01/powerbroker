@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function MessageBoard() {
   const [messages, setMessages] = useState([]); // Stores all messages
+  const [userPictures, setUserPictures] = useState({}); // Maps usernames to their profile pictures
   const [newMessage, setNewMessage] = useState(''); // Tracks the new message being written
   const [newImageUrl, setNewImageUrl] = useState(''); // Tracks the new image URL
   const [error, setError] = useState(null); // Tracks any error
@@ -13,32 +14,6 @@ function MessageBoard() {
   const connectionString = process.env.REACT_APP_CONNECTION_STRING; // API base URL
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-  const [userData, setUserData] = useState(null); // State to store user data
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`${connectionString}/api/user?username=${encodeURIComponent(currentUser.username)}`, {
-          method: 'GET',
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user data: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setUserData(data); // Store the user data in state
-        setLoading(false); // Update loading state
-      } catch (err) {
-        console.error('Error fetching user data:', err);
-        setError(err.message);
-        setLoading(false); // Update loading state
-      }
-    };
-
-    fetchUserData();
-  }, [connectionString, currentUser.username]);
 
   // Fetch all messages
   const fetchMessages = useCallback(async () => {
@@ -60,6 +35,31 @@ function MessageBoard() {
       setLoading(false); // Stop loading in case of error
     }
   }, [connectionString]); // Dependency: connectionString
+
+  // Fetch profile picture for a given username
+  const fetchProfilePicture = useCallback(async (username) => {
+    if (userPictures[username]) return; // If already fetched, skip
+    try {
+      const response = await fetch(`${connectionString}/api/user?username=${encodeURIComponent(username)}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch profile picture for ${username}: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setUserPictures((prev) => ({ ...prev, [username]: data.profile_picture })); // Store the profile picture
+    } catch (err) {
+      console.error(`Error fetching profile picture for ${username}:`, err);
+    }
+  }, [connectionString, userPictures]); // Dependencies: connectionString and userPictures
+
+  // Fetch profile pictures for all users in messages
+  useEffect(() => {
+    const uniqueUsernames = [...new Set(messages.map((msg) => msg.username))]; // Get unique usernames
+    uniqueUsernames.forEach((username) => fetchProfilePicture(username)); // Fetch profile pictures
+  }, [messages, fetchProfilePicture]); // Re-run when messages change
 
   // Post a new message
   const sendMessage = async () => {
@@ -135,34 +135,38 @@ function MessageBoard() {
                 </Link>
               </li>
             </ul>
-
           </div>
         )}
       </div>
 
-
       <h2 className="text-center mb-4 custom-header">The Message Board</h2>
 
-      {/* Message Input */}
-      <div className="mb-4">
-        <textarea
-          className="form-control mb-2"
-          placeholder="Write your message here..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          rows="3"
-        ></textarea>
-        <input
-          type="url"
-          className="form-control mb-2"
-          placeholder="Add an image URL (optional)..."
-          value={newImageUrl}
-          onChange={(e) => setNewImageUrl(e.target.value)}
-        />
-        <button className="button-74 w-100" onClick={sendMessage}>
-          Send Message
-        </button>
-      </div>
+      {/* Conditionally Render Message Input Form */}
+      {currentUser ? (
+        <div className="mb-4">
+          <textarea
+            className="form-control mb-2"
+            placeholder="Write your message here..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            rows="3"
+          ></textarea>
+          <input
+            type="url"
+            className="form-control mb-2"
+            placeholder="Add an image URL (optional)..."
+            value={newImageUrl}
+            onChange={(e) => setNewImageUrl(e.target.value)}
+          />
+          <button className="button-74 w-100" onClick={sendMessage}>
+            Send Message
+          </button>
+        </div>
+      ) : (
+        <p className="text-center text-muted">
+          Please log in to post a message.
+        </p>
+      )}
 
       {/* Messages List */}
       <div className="list-group">
@@ -171,17 +175,19 @@ function MessageBoard() {
             <div key={msg.id} className="message-item">
               <p>
                 <img 
-                  src={userData?.profile_picture} 
-                  alt={`${userData?.bio}`}
+                  src={userPictures[msg.username] || 'https://via.placeholder.com/30'} // Display fetched profile picture or placeholder
+                  alt={`${msg.username}'s profile`}
                   style={{
                     width: "30px",
                     height: "30px",
+                    borderRadius: "50%", // Make it circular
+                    objectFit: "cover",
                     zIndex: 10,
                   }}
                 />
                 <strong className="ps-2 text-black">{msg.username}: </strong> 
                 <br />
-                <span className='text-black'>{msg.message}</span>
+                <span className="text-black">{msg.message}</span>
                 <br />
                 {msg.image_link && (
                   <img 
