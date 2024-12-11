@@ -3,6 +3,7 @@ const AuthController = require('../controllers/authController');
 const ProgressController = require('../controllers/progressController');
 const UserController = require('../controllers/userController');
 const MessageController = require('../controllers/messageController');
+const VoteController = require('../controllers/voteController');
 
 const router = express.Router();
 
@@ -23,6 +24,10 @@ router.get('/user', UserController.fetchUser);
 
 // Message routes
 router.post('/message', MessageController.sendMessage);
-router.get('/message', MessageController.fetchMessages); 
+router.get('/message', MessageController.fetchMessages);
+
+// Voting route
+router.post('/vote', VoteController.createVote);
+router.get('/vote', VoteController.fetchVotes);
 
 module.exports = router;

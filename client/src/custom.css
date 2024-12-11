@@ -253,18 +253,20 @@
   list-style: none; /* Remove default list styling */
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
+  color: black;
 }
 
 /* Menu item styling */
 .menu-item {
   margin: 8px 0; /* Add spacing between menu items */
+  color: black;
 }
 
 /* Menu link styling */
 .menu-link {
   display: block; /* Makes the entire area clickable */
   text-decoration: none; /* Remove underline */
-  color: #007bff; /* Primary blue color */
+  color: black; /* Primary blue color */
   font-weight: 600; /* Slightly bold for emphasis */
   padding: 10px 15px; /* Add spacing inside the link */
   border-radius: 8px; /* Rounded corners */

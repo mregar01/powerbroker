@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '.././custom.css';
-import { Link } from 'react-router-dom';
+import Menu from './Menu';
+import VotePanel from './VotePanel';
 
 function MessageBoard() {
   const [messages, setMessages] = useState([]); // Stores all messages
@@ -101,6 +102,18 @@ function MessageBoard() {
     fetchMessages();
   }, [fetchMessages]); // Add fetchMessages as a dependency
 
+  if (!currentUser) {
+    return (
+      <div className="container mt-4 text-center">
+        <h2 className="text-muted">Please log in to use the message board.</h2>
+        <button className="button-74" onClick={toggleMenu}>
+          Menu
+        </button>
+        {menuOpen && <Menu currentUser={currentUser} />}
+      </div>
+    );
+  }
+
   if (loading) {
     return <div>Loading messages...</div>;
   }
@@ -116,27 +129,7 @@ function MessageBoard() {
         <button className="button-74" onClick={toggleMenu}>
           Menu
         </button>
-        {menuOpen && (
-          <div className="menu">
-            <ul className="menu-list">
-              <li className="menu-item">
-                <Link to={`/user/${currentUser?.username}`} className="menu-link">
-                  My Profile
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link to="/leaderboard" className="menu-link">
-                  Leaderboard
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link to="/message" className="menu-link">
-                  Message Board
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
+        {menuOpen && <Menu currentUser={currentUser} />}
       </div>
 
       <h2 className="text-center mb-4 custom-header">The Message Board</h2>
@@ -172,23 +165,33 @@ function MessageBoard() {
       <div className="list-group">
         {messages.length > 0 ? (
           messages.map((msg) => (
-            <div key={msg.id} className="message-item">
-              <p>
-                <img 
-                  src={userPictures[msg.username] || 'https://via.placeholder.com/30'} // Display fetched profile picture or placeholder
-                  alt={`${msg.username}'s profile`}
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%", // Make it circular
-                    objectFit: "cover",
-                    zIndex: 10,
-                  }}
-                />
-                <strong className="ps-2 text-black">{msg.username}: </strong> 
-                <br />
-                <span className="text-black">{msg.message}</span>
-                <br />
+            <div key={msg.id} className="message-item" style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+              {/* VotePanel */}
+              <div style={{ marginRight: '10px' }}>
+                <VotePanel message_id={msg.id} username={currentUser.username} />
+              </div>
+
+              {/* Message Content */}
+              <div>
+                <p style={{ margin: 0 }}>
+                  <img 
+                    src={userPictures[msg.username] || 'https://via.placeholder.com/30'} // Display fetched profile picture or placeholder
+                    alt={`${msg.username}'s profile`}
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "50%", // Make it circular
+                      objectFit: "cover",
+                      zIndex: 10,
+                      marginRight: "10px", // Add spacing between profile picture and username
+                      verticalAlign: "middle",
+                    }}
+                  />
+                  <strong className="text-black">{msg.username}: </strong>
+                </p>
+                <p style={{ marginTop: "5px" }}>
+                  <span className="text-black">{msg.message}</span>
+                </p>
                 {msg.image_link && (
                   <img 
                     src={msg.image_link} 
@@ -201,16 +204,18 @@ function MessageBoard() {
                       borderRadius: "5px"
                     }}
                   />
-                )} 
-              </p>
-              <small className="text-muted">Posted on: {new Date(msg.created_at).toLocaleString()}</small>
+                )}
+                <br></br>
+                <small className="text-muted">Posted on: {new Date(msg.created_at).toLocaleString()}</small>
+              </div>
             </div>
           ))
         ) : (
           <p className="text-center">No messages yet. Be the first to post!</p>
         )}
       </div>
-    </div>
+
+      </div>
   );
 }
 

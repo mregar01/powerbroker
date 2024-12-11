@@ -7,6 +7,7 @@ import styles from '.././login.module.css';
 import Crown from '../crownnew.png';
 import Mick from '../mickey.png';
 import Loser from '../last.png';
+import Menu from './Menu';
 
 function Leaderboard() {
   const [progress, setProgress] = useState([]);
@@ -81,27 +82,7 @@ function Leaderboard() {
         <button className="button-74" onClick={toggleMenu}>
           Menu
         </button>
-        {menuOpen && (
-          <div className="menu">
-            <ul className="menu-list">
-              <li className="menu-item">
-                <Link to={`/user/${currentUser?.username}`} className="menu-link">
-                  My Profile
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link to="/leaderboard" className="menu-link">
-                  Leaderboard
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link to="/message" className="menu-link">
-                  Message Board
-                </Link>
-              </li>
-            </ul>
-        </div>
-        )}
+        {menuOpen && <Menu currentUser={currentUser} />}
       </div>
       {/* Header Row */}
       <div className="row">

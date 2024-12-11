@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '.././custom.css'
+import Menu from './Menu';
 
 function User() {
   const { username } = useParams(); // Extract the username from the URL
@@ -15,7 +16,8 @@ function User() {
   const navigate = useNavigate();
 
   // Retrieve the currently logged-in user's username from local storage
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'))?.username;
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  console.log(currentUser.username);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -107,31 +109,11 @@ function User() {
         <button className="button-74" onClick={toggleMenu}>
           Menu
         </button>
-        {menuOpen && (
-          <div className="menu">
-            <ul className="menu-list">
-              <li className="menu-item">
-                <Link to={`/user/${currentUser?.username}`} className="menu-link">
-                  My Profile
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link to="/leaderboard" className="menu-link">
-                  Leaderboard
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link to="/message" className="menu-link">
-                  Message Board
-                </Link>
-              </li>
-            </ul>
-        </div>
-        )}
+        {menuOpen && <Menu currentUser={currentUser} />}
       </div>
 
       <h1 className='custom-header'>{userData.username}</h1>
-      {editMode && currentUser === username ? (
+      {editMode && currentUser.username === username ? (
         <>
           <div className="form-container" style={{ width: '80%', margin: '0 auto' }}>
             <label className="d-block mb-3">
@@ -236,7 +218,7 @@ function User() {
                 </p>
               </div>
             </div>
-            {currentUser === username && (
+            {currentUser.username === username && (
               <div className="text-center mb-3">
                 <button className="button-74 w-100" onClick={handleEditToggle}>
                   Edit Profile
