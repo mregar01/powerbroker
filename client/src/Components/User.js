@@ -222,12 +222,13 @@ function User() {
             <div className="row mb-3">
             <hr />
               <div className="col">
-                {/* <QuotesList></QuotesList> */}
+                <Quote ></Quote>
               </div>
             </div>
+            {/* <Quote ></Quote> */}
             {currentUser?.username === username && (
               <div>
-                <Quote></Quote>
+                {/* <Quote></Quote> */}
                 <div className="text-center mb-3">
                   {/* <NewQuote></NewQuote> */}
                   <button className="button-74 w-100" onClick={handleEditToggle}>

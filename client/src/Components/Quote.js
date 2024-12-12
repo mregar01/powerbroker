@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '.././custom.css';
+import { useParams } from 'react-router-dom';
+
 
 const Quote = () => {
+  const { username } = useParams();
   const [quotes, setQuotes] = useState([]); // State to hold the list of quotes
   const [newQuote, setNewQuote] = useState(''); // State to hold the new quote input
   const [isAdding, setIsAdding] = useState(false); // Tracks whether we're in "adding" mode
@@ -13,9 +16,9 @@ const Quote = () => {
   useEffect(() => {
     const fetchQuotes = async () => {
 
-      if (!currentUser?.username) return;
+      // if (!currentUser?.username) return;
       try {
-        const response = await fetch(`${connectionString}/api/user?username=${currentUser.username}`, {
+        const response = await fetch(`${connectionString}/api/user?username=${username}`, {
           method: 'GET',
         });
 
@@ -30,10 +33,11 @@ const Quote = () => {
       }
     };
 
-    if (currentUser.username) {
-      fetchQuotes();
-    }
-  }, [currentUser.username, connectionString]);
+    // if (currentUser?.username) {
+    //   fetchQuotes();
+    // }
+    fetchQuotes();
+  }, [username, connectionString]);
 
   const handleAddClick = () => {
     setIsAdding(true); // Show the input field and submit button
@@ -56,7 +60,7 @@ const Quote = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: currentUser.username,
+          username: currentUser?.username,
           quote: newQuote,
         }),
       });
@@ -74,6 +78,27 @@ const Quote = () => {
       alert(`Failed to add quote: ${error.message}`);
     }
   };
+
+  console.log("u1: " + username + " u2: " + currentUser?.username)
+
+  if (username !== currentUser?.username) {
+    console.log("right here")
+    return (
+    <div>
+      <h1 className='quote-header text-center'>My Quotes</h1>
+      {error ? (
+        <p style={{ color: 'red' }}>Error: {error}</p>
+      ) : (
+        <ul className='quote-container'>
+          {Array.isArray(quotes) && quotes.map((quote, index) => (
+            <li className='quote-list' key={index}>
+              "{quote}"
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>)
+  }
 
   return (
     <div>
