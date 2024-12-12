@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import UpvoteButton from './UpvoteButton';
 import DownvoteButton from './DownVoteButton';
+import '.././custom.css'
 
 function VotePanel({ message_id, username }) {
   const connectionString = process.env.REACT_APP_CONNECTION_STRING; // API base URL
@@ -42,11 +43,11 @@ function VotePanel({ message_id, username }) {
 
       {/* Vote Count */}
       {loading ? (
-        <p>Loading...</p>
+        <p style={{ margin: '10px 0', fontSize: '1.2rem', fontWeight: 'bold', color: 'black' }}>{voteCount}</p>
       ) : error ? (
         <p style={{ color: 'red' }}>{error}</p>
       ) : (
-        <p style={{ margin: '10px 0', fontSize: '1.2rem', fontWeight: 'bold' }}>{voteCount}</p>
+        <p style={{ margin: '10px 0', fontSize: '1.2rem', fontWeight: 'bold', color: 'black' }}>{voteCount}</p>
       )}
 
       {/* Downvote Button */}

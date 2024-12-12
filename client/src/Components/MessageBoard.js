@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '.././custom.css';
 import Menu from './Menu';
 import VotePanel from './VotePanel';
+import { Link } from 'react-router-dom';
 
 function MessageBoard() {
   const [messages, setMessages] = useState([]); // Stores all messages
@@ -132,7 +133,7 @@ function MessageBoard() {
         {menuOpen && <Menu currentUser={currentUser} />}
       </div>
 
-      <h2 className="text-center mb-4 custom-header">The Message Board</h2>
+      <h2 className="text-center mb-4 custom-header mt-4">The Message Board</h2>
 
       {/* Conditionally Render Message Input Form */}
       {currentUser ? (
@@ -187,7 +188,14 @@ function MessageBoard() {
                       verticalAlign: "middle",
                     }}
                   />
-                  <strong className="text-black">{msg.username}: </strong>
+                  <Link
+                    to={`/user/${msg.username}`}
+                    className="user-profile"
+                    // style={{ textAlign: "center", flexGrow: "1" }}
+                  >
+                    {msg.username}
+                  </Link>
+                  {/* <strong className="text-black">{msg.username}: </strong> */}
                 </p>
                 <p style={{ marginTop: "5px" }}>
                   <span className="text-black">{msg.message}</span>

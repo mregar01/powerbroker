@@ -284,3 +284,32 @@
   background-color: #0056b3; /* Darker blue for active state */
   color: white;
 }
+
+
+.user-profile {
+  color:black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.quote-list {
+  list-style-type: none; /* Removes bullet points */
+  background-color: #997950 ;
+  margin-bottom: 10px;
+  border: 1px solid #ccc; /* Optional: Adds a border */
+  border-radius: 10px; /* Gives rounded corners */
+  padding: 10px; /* Adds some space inside the item */
+  margin-bottom: 10px; /* Adds space between list items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  color: #FFFDD1;
+}
+
+.quote-container {
+  margin: 2px;
+  padding: 2px;
+}
+
+.quote-header {
+  font-weight: bold;
+  font-family: 'Impact', sans-serif;
+}

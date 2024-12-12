@@ -1,3 +1,5 @@
+import '.././custom.css'
+
 function UpvoteButton({ message_id, username, onVote }) {
   const connectionString = process.env.REACT_APP_CONNECTION_STRING; // API base URL
   const handleUpvote = async () => {
@@ -33,13 +35,12 @@ function UpvoteButton({ message_id, username, onVote }) {
     <button
       onClick={handleUpvote}
       style={{
-        background: 'none',
-        border: 'none',
         cursor: 'pointer',
         fontSize: '1.5rem',
         color: 'blue',
       }}
       title="Upvote"
+      className='button-74'
     >
       ↑
     </button>

@@ -1,3 +1,5 @@
+import '.././custom.css'
+
 function DownvoteButton({ message_id, username, onVote }) {
   const connectionString = process.env.REACT_APP_CONNECTION_STRING; // API base URL
   const handleDownvote = async () => {
@@ -33,13 +35,12 @@ function DownvoteButton({ message_id, username, onVote }) {
     <button
       onClick={handleDownvote}
       style={{
-        background: 'none',
-        border: 'none',
         cursor: 'pointer',
         fontSize: '1.5rem',
         color: 'red',
       }}
       title="Downvote"
+      className="button-74"
     >
       ↓
     </button>

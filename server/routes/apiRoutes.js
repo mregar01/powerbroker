@@ -4,6 +4,7 @@ const ProgressController = require('../controllers/progressController');
 const UserController = require('../controllers/userController');
 const MessageController = require('../controllers/messageController');
 const VoteController = require('../controllers/voteController');
+const QuoteController = require('../controllers/quoteController')
 
 const router = express.Router();
 
@@ -29,5 +30,9 @@ router.get('/message', MessageController.fetchMessages);
 // Voting route
 router.post('/vote', VoteController.createVote);
 router.get('/vote', VoteController.fetchVotes);
+
+// Quote ruotes
+router.post('/quote', QuoteController.createQuote);
+router.get('/quote', QuoteController.getQuotes);
 
 module.exports = router;
