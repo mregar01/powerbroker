@@ -5,6 +5,8 @@ const UserController = require('../controllers/userController');
 const MessageController = require('../controllers/messageController');
 const VoteController = require('../controllers/voteController');
 const QuoteController = require('../controllers/quoteController')
+const MosesController = require('../controllers/mosesController')
+// import mosesController from "../controllers/mosesController.js";
 
 const router = express.Router();
 
@@ -34,5 +36,10 @@ router.get('/vote', VoteController.fetchVotes);
 // Quote ruotes
 router.post('/quote', QuoteController.createQuote);
 router.get('/quote', QuoteController.getQuotes);
+
+
+//MosesGPT route
+router.post('/bot', MosesController.sendMessage);
+
 
 module.exports = router;

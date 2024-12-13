@@ -44,6 +44,11 @@ function Menu({ currentUser }) {
             Message Board
           </Link>
         </li>
+        <li className="menu-item">
+          <Link to="/moses" className="menu-link text-black">
+            MosesBot
+          </Link>
+        </li>
       </ul>
     </div>
   );

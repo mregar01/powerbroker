@@ -9,6 +9,7 @@ import Mick from '../mickey.png';
 import Loser from '../last.png';
 import Menu from './Menu';
 
+
 function Leaderboard() {
   const [progress, setProgress] = useState([]);
   const [page_number, setPage] = useState('');
