@@ -18,7 +18,6 @@ function User() {
 
   // Retrieve the currently logged-in user's username from local storage
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  console.log(currentUser?.username);
 
   useEffect(() => {
     const fetchUserData = async () => {

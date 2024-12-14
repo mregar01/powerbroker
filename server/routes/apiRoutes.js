@@ -36,6 +36,8 @@ router.get('/vote', VoteController.fetchVotes);
 // Quote ruotes
 router.post('/quote', QuoteController.createQuote);
 router.get('/quote', QuoteController.getQuotes);
+router.post('/deleteQuote', QuoteController.deleteQuote);
+router.post('/editQuote', QuoteController.editQuote);
 
 
 //MosesGPT route
